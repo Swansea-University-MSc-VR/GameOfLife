@@ -14,8 +14,9 @@ public class ForestFireCell : MonoBehaviour
         None,
         Tree,
         Grass,
-        Alight,
         Rock,
+        House,
+        Alight,
         Burnt,
     }
 
@@ -26,11 +27,13 @@ public class ForestFireCell : MonoBehaviour
     public Material groundMaterialGrass;
     public Material groundMaterialRock;
     public Material groundMaterialTree;
+    public Material groundMaterialHouse;
     private MeshRenderer groundMeshRenderer; // reference to this cell's mesh renderer, used when changing material
 
     public GameObject treeObject; // reference to tree visual object
     public GameObject leaves; // reference to leaves visual object
     public GameObject rockObject; // reference to rock visual object
+    public GameObject houseObject;// reference to house visual object
 
     public GameObject treeFireFVX; // reference to tree fire vfx
     public GameObject grassFireFVX; // reference to grass fire vfx
@@ -112,6 +115,7 @@ public class ForestFireCell : MonoBehaviour
         groundMeshRenderer.material = groundMaterialGrass;
     }
 
+
     // change cell state to rock
     // once a cell is set to rock state will never change
     // so we can check to see if the rock has material has been set aleady and never alter it again to save on performance
@@ -126,6 +130,19 @@ public class ForestFireCell : MonoBehaviour
         cellFuel = 0;
         groundMeshRenderer.material = groundMaterialRock; // sets the cell material to rock
         rockObject.SetActive(true); 
+    }
+
+    public void SetHouse()
+    {
+        if (groundMeshRenderer.sharedMaterial == groundMaterialHouse)
+            return;
+
+        // this code below wont run once the house material has been set
+        ResetCell();
+        cellState = State.House;
+        cellFuel = 0;
+        groundMeshRenderer.material = groundMaterialHouse; // sets the cell material to house
+        houseObject.SetActive(true);
     }
 
     // set cell alight

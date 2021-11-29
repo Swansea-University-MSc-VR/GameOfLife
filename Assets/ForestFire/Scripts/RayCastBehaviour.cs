@@ -21,13 +21,17 @@ public class RaycastBehaviour : MonoBehaviour
 
     private void AdvancedRaycast()
     {
-        Debug.DrawRay(transform.position, transform.forward * 3f, Color.magenta);
+        Debug.DrawRay(transform.position, transform.forward * 6f, Color.magenta);
 
         RaycastHit hit;
 
-        if (Physics.Raycast(raycastOrigin.position,transform.forward, out hit, 3f,layerMask));
+        if (Physics.Raycast(raycastOrigin.position,transform.forward, out hit, 6f,layerMask))
         {
+
+            hit.transform.gameObject.SetActive(false);
+            
             Debug.Log("Raycast Interaction");
+            //use layer mask to filter collider objects.
         }
     }
 }

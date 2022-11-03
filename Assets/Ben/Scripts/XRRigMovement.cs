@@ -20,10 +20,7 @@ public class XRRigMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-
         CheckingMovementOfXRRig();
-
     }
 
     void CheckingMovementOfXRRig()

@@ -12,6 +12,14 @@ TagManager:
   - Truckers
   - LeftHand
   - RightHand
+  - AerialFirefighter
+  - 'Manikin Alex '
+  - Manikin Remy
+  - Manikin Kate
+  - Manikin Sophie
+  - ForestAreaEntry
+  - ForestAreaExit
+  - FlightDestroyer
   layers:
   - Default
   - TransparentFX

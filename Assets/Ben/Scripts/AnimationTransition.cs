@@ -7,6 +7,9 @@ public class AnimationTransition : MonoBehaviour
     [SerializeField]
     private Animator avatarAnimator;
 
+    [SerializeField]
+    private ManikinHealth _manikinHealth;
+
     private int i;
 
 
@@ -26,7 +29,7 @@ public class AnimationTransition : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.N))
         {
-            avatarAnimator.Play("Waving");
+            avatarAnimator.Play("DeathRight");
             i++;
             Debug.Log("i value: " + i);
         }
@@ -34,7 +37,11 @@ public class AnimationTransition : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        if(collision.gameObject.tag == "Fire")
+        if(collision.gameObject.tag == "Fire" && _manikinHealth.manikinTotalHealthLeft == 0f)
+        {
+            avatarAnimator.Play("Death");
+        }
+        else if(_manikinHealth.manikinTotalHealthLeft == 0f)
         {
             avatarAnimator.Play("Death");
         }

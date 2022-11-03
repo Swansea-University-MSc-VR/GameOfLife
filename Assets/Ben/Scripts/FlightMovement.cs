@@ -11,8 +11,12 @@ public class FlightMovement : MonoBehaviour
     public float zUpperLimit;
     public float zLowerLimit;
 
+    public GameObject fightPrefab;
 
-
+    private void Start()
+    {
+        InvokeRepeating("FlightFlyingPath", 2f, 40f);
+    }
 
     void Update()
     {
@@ -21,6 +25,10 @@ public class FlightMovement : MonoBehaviour
 
     void FlightFlyingPath()
     {
-        gameObject.transform.Translate(new Vector3(Random.Range(xUpperLimit, xLowerLimit), Random.Range(yUpperLimit,yLowerLimit),Random.Range(zUpperLimit,zLowerLimit)));
+        
+        Instantiate(fightPrefab, new Vector3(xUpperLimit, Random.Range(yUpperLimit, yLowerLimit), Random.Range(zUpperLimit, zLowerLimit)), Quaternion.Euler(-90f, 0f, 0f));
+        
     }
+
+
 }

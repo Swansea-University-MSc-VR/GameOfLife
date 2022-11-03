@@ -5,8 +5,6 @@ using UnityEngine.VFX;
 
 public class ParticleCollisionDetection : MonoBehaviour
 {
-    //public ParticleSystem extinguisherParticle;
-
     //public GameObject[] fireGO;
 
     /// <summary>
@@ -21,24 +19,43 @@ public class ParticleCollisionDetection : MonoBehaviour
         {
             StartCoroutine(Extinguish());
             Debug.Log("If " + other.tag + " GO False");
-            
-            //gameObject.GetComponent<BoxCollider>().enabled = false;
-            //gameObject.GetComponent<VisualEffect>().enabled = false;
-            //gameObject.SetActive(false);
         }
-
+        else if (other.tag == "AerialFirefighter")
+        {
+            StartCoroutine(AerialExtinguish());
+            Debug.Log("If " + other.tag + " GO False");
+        }
     }
-    // Wait for few sec to disable the game object
+
+    /// <summary>
+    /// Coroutine for Wait for few sec to disable the game object
+    /// </summary>
     IEnumerator Extinguish()
     {
         yield return new WaitForSecondsRealtime(7f);
         gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// IEnumerator for the Aerial fire extinguisher
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator AerialExtinguish()
+    {
+        yield return new WaitForSecondsRealtime(0.5f);
+        gameObject.SetActive(false);
+    }
+
+
+
+
+
+
+
 
     //void findingFireGameObject()
     //{
-        
+
     //    //get all the objects with the tag "myTag"
     //    fireGO = GameObject.FindGameObjectsWithTag("Fire");
     //    //loop through the returned array of game objects and set each to active false
@@ -47,5 +64,5 @@ public class ParticleCollisionDetection : MonoBehaviour
     //        //item.SetActive(false);
     //    } 
     //}
-  
+
 }

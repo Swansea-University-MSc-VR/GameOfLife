@@ -14,7 +14,9 @@ public class ManikinController : MonoBehaviour
 
     [SerializeField]
     private float _speed;
-
+    public RaycastHit Shot;
+    public float targetDistance;
+    public float allowedDistance;
     //-------------------------------------------------------
     [SerializeField]
     private Animator avatarAnimator;
@@ -41,7 +43,7 @@ public class ManikinController : MonoBehaviour
         //ManikinDeathAnimationTransition();
 
         //ManikinIdleRunAnimationTransition();
-
+        FollowThePlayer();
     }
 
 
@@ -51,6 +53,7 @@ public class ManikinController : MonoBehaviour
 
         if(_distanceToXRrig < 5)
         {
+            
             transform.LookAt(objectToFollow);
             isGathered = true;
         }
@@ -112,4 +115,28 @@ public class ManikinController : MonoBehaviour
         }
     }
 
+    void FollowThePlayer()
+    {
+        _distanceToXRrig = Vector3.Distance(objectToFollow.position, transform.position);
+
+        transform.LookAt(objectToFollow);
+        
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out Shot) && isGathered == true)
+        {
+            targetDistance = Shot.distance;
+            if(targetDistance >= allowedDistance)
+            {
+                _speed = 0.01f;
+                avatarAnimator.Play("Walking");
+                transform.position = Vector3.MoveTowards(transform.position, objectToFollow.transform.position, _speed);
+            }
+            else
+            {
+                _speed = 0f;
+                avatarAnimator.Play("Idle");
+            }
+        }
+    }
+
 }
+

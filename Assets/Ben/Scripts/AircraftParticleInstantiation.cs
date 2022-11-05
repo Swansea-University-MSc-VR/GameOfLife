@@ -6,15 +6,19 @@ public class AircraftParticleInstantiation : MonoBehaviour
 {
     public ParticleSystem aircraftParticleSystem;
     public AudioSource flightEngineAudioSource;
+
+    #region Monobehaviour Methods
     void Start()
     {
         aircraftParticleSystem.Stop();
     }
 
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "ForestAreaEntry")
         {
+            
             //aircraftParticleSystem.Play();
             StartCoroutine(StartParticleEffect());
             StartCoroutine(IncreaseVolumeCoroutine());
@@ -32,6 +36,11 @@ public class AircraftParticleInstantiation : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region IEnumerators
+    
+
     IEnumerator StartParticleEffect()
     {
         yield return new WaitForSeconds(0.2f);
@@ -42,7 +51,7 @@ public class AircraftParticleInstantiation : MonoBehaviour
     {
         while (flightEngineAudioSource.volume > 0f)
         {
-            flightEngineAudioSource.volume -= 0.01f;
+            flightEngineAudioSource.volume -= 0.001f;
             yield return null;
         }
     }
@@ -51,9 +60,9 @@ public class AircraftParticleInstantiation : MonoBehaviour
     {
         while (flightEngineAudioSource.volume < 1f)
         {
-            flightEngineAudioSource.volume += 0.06f;
+            flightEngineAudioSource.volume += 0.005f;
             yield return null;
         }
     }
-
+    #endregion
 }

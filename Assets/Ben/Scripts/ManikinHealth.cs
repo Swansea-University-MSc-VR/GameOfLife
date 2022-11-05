@@ -10,6 +10,7 @@ public class ManikinHealth : MonoBehaviour
 
     private float _manikinTotalHealth;
 
+    #region Monobehaviour Methods
     void Start()
     {
         _manikinTotalHealth = 100f;
@@ -22,18 +23,17 @@ public class ManikinHealth : MonoBehaviour
     /// <param name="fire"></param>
     void OnCollisionStay(Collision fire)
     {
-
         if (fire.gameObject.tag == "Fire")
         {
-
             manikinhealthSliderBar.value = manikinTotalHealthLeft - 1f * Time.deltaTime;
             Debug.Log("Health is reducing");
         }
-
     }
+
     void Update()
     {
         manikinTotalHealthLeft = manikinhealthSliderBar.value;
         
     }
+    #endregion
 }

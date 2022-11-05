@@ -6,15 +6,10 @@ public class EngineRotation : MonoBehaviour
 {
     public int speed;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+   
     void Update()
     {
+        // Rotating the gameobject attached with this script along z axis
         gameObject.transform.Rotate(Vector3.forward * speed * Time.deltaTime);
     }
 }

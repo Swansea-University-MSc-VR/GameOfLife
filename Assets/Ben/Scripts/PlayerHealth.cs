@@ -10,6 +10,7 @@ public class PlayerHealth : MonoBehaviour
     private float _totalHealth;
     private float _totalHealthLeft;
 
+    #region Monobehaviour
     void Start()
     {
         _totalHealth = 100f;
@@ -32,20 +33,9 @@ public class PlayerHealth : MonoBehaviour
 
     }
 
-    //void decreaseHealth()
-    //{
-    //    if (Input.GetKey(KeyCode.D))
-    //    {
-
-
-    //        healthSliderBar.value = _totalHealthLeft - 1 * Time.deltaTime;
-    //        print("key d pressed");
-    //    }
-    //}
-
     void Update()
     {
         _totalHealthLeft = healthSliderBar.value;
-        //decreaseHealth();
     }
+    #endregion
 }

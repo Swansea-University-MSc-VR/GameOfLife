@@ -37,8 +37,6 @@ public class Timer : MonoBehaviour
         timeLeftDigital.text = Mathf.FloorToInt(timeLeft).ToString() + " sec";
         timeLeft = _totalTime - Time.time;  // Time Calculation
         TimerFill();
-
-        
     }
 
     #endregion

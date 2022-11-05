@@ -9,6 +9,7 @@ public class XRRigMovement : MonoBehaviour
 
     public bool isRigMoving;
 
+    #region Monobehaviour Methods
     void Start()
     {
         isRigMoving = false;
@@ -17,12 +18,19 @@ public class XRRigMovement : MonoBehaviour
         Debug.Log(currentPosition);
     }
 
-    // Update is called once per frame
+  
     void Update()
     {
         CheckingMovementOfXRRig();
     }
 
+    #endregion
+
+    #region Private Methods
+
+    /// <summary>
+    /// Method to check whether the XR_Rig (Player) is moving and updating a bool accordingliy
+    /// </summary>
     void CheckingMovementOfXRRig()
     {
         currentPosition = gameObject.transform.position;
@@ -45,4 +53,6 @@ public class XRRigMovement : MonoBehaviour
             lastPosition = transform.position;
         }
     }
+
+    #endregion
 }

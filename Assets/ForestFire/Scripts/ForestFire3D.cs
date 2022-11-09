@@ -60,6 +60,19 @@ public class ForestFire3D : MonoBehaviour
         }
     }
 
+    public void GameIsRunningOrNot()
+    {
+        // if the gameRunning is true, pause the game
+        if (gameRunning)
+        {
+            PauseGame(true);
+        }
+        else // if the gameRunning is false, unpause the game
+        {
+            PauseGame(false);
+        }
+    }
+
     // Update is a built-in Unity function that is called once per frame 
     private void Update()
     {

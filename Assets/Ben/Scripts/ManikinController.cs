@@ -41,25 +41,27 @@ public class ManikinController : MonoBehaviour
 
     void Update()
     {
-        FollowXRrig();
+        CheckingGatheredOrNot();
 
-        if(isGathered == true)
+        // Checking whether the player gathered all the NPC and they have not entered the helicopter area
+        if(isGathered == true && !enteredSafeArea)
         {
-
             FollowThePlayer();
 
             ManikinDeathAnimationTransition();
         }
         
+        // Checking NPC's entering helicopter area
         if(enteredSafeArea == true)
         {
-            UnitMethod();
-        }
-
-            
+            EnetredHelicopterArea();
+        }   
     }
 
-
+    /// <summary>
+    /// Checking a bool whether the manikin has entered the 'HelicopterSaveArea'
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "HelicopterSaveArea")
@@ -71,46 +73,30 @@ public class ManikinController : MonoBehaviour
     #endregion
 
     #region Private Methods
-    void FollowXRrig()
+
+    /// <summary>
+    /// Bool to check whether the manikins are gathered by player
+    /// </summary>
+    void CheckingGatheredOrNot()
     {
         //Calculating distance between the object to follow and gameobject attached with this script
         _distanceToXRrig = Vector3.Distance(objectToFollow.position, transform.position);
 
         if (_distanceToXRrig < 6)
         {
-
-            //transform.LookAt(objectToFollow);
             isGathered = true;
         }
-
-        //if(_distanceToXRrig <= 4.5f && isGathered == true)
-        //{
-        //    //gameObject.transform.position = objectToFollow.position + offset;
-        //    //transform.position = Vector3.MoveTowards(transform.position, objectToFollow.position + offset, _speed * Time.deltaTime);
-        //    //transform.forward = objectToFollow.transform.position - transform.position;
-        //}
     }
 
-
+    /// <summary>
+    /// Once the health reaches the zero a death animation will play
+    /// </summary>
     void ManikinDeathAnimationTransition()
     {
         if (_manikinHealth.manikinTotalHealthLeft == 0f)
         {
             avatarAnimator.Play("DeathRight");
             Debug.Log(_manikinHealth.manikinTotalHealthLeft);
-        }
-    }
-
-    void ManikinIdleRunAnimationTransition()
-    {
-        if (xRRigMovement.isRigMoving == true && _manikinHealth.manikinTotalHealthLeft != 0f)
-        {
-            avatarAnimator.Play("Walking");
-        }
-        else if (xRRigMovement.isRigMoving == false && _manikinHealth.manikinTotalHealthLeft != 0f)
-        {
-
-            avatarAnimator.Play("Idle");
         }
     }
 
@@ -124,7 +110,7 @@ public class ManikinController : MonoBehaviour
 
         transform.LookAt(objectToFollow);
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out Shot) && isGathered == true)
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out Shot, obstacleLayer) && isGathered == true && enteredSafeArea == false)
         {
             // Checking whether the raycast hit properly to thr target object, i.e Player.
             Debug.DrawRay(transform.position, transform.forward, Color.blue, 15f);
@@ -145,13 +131,18 @@ public class ManikinController : MonoBehaviour
         }
     }
 
-    public void UnitMethod()
+    /// <summary>
+    /// While entering the helicopter area the manikins will walk towards the their seat 
+    /// </summary>
+    public void EnetredHelicopterArea()
     {
         // Checking whether the raycast hit properly to thr target object, i.e Player.
         Debug.DrawRay(transform.position, transform.forward, Color.blue, 20f);
 
         if (transform.position != seatPosition.transform.position && enteredSafeArea == true)
         {
+            _speed = 0.01f;
+
             isGathered = false;
             transform.LookAt(seatPosition.transform);
             transform.position = Vector3.MoveTowards(transform.position, seatPosition.transform.position, _speed);
@@ -165,7 +156,6 @@ public class ManikinController : MonoBehaviour
             avatarAnimator.Play("StandToSit");
             transform.parent = seatPosition.transform;
         }
-      
     }
 
     #endregion

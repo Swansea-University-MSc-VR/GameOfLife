@@ -15,7 +15,6 @@ public class XRRigMovement : MonoBehaviour
         isRigMoving = false;
         currentPosition = gameObject.transform.position; // Collecting the current position
         lastPosition = transform.position;
-        
     }
 
   

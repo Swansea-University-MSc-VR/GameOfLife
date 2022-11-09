@@ -21,6 +21,7 @@ TagManager:
   - ForestAreaExit
   - FlightDestroyer
   - HelicopterSaveArea
+  - HeliPad
   layers:
   - Default
   - TransparentFX

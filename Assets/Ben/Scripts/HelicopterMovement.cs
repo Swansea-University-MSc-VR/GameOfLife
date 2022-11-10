@@ -18,15 +18,14 @@ public class HelicopterMovement : MonoBehaviour
     private bool helicopterTakeOff;
 
     public GameObject stepToClimb;
-    
 
 
+    #region Monobehaviour Methods
     // Start is called before the first frame update
     void Start()
     {
         reachedTopArea = false;
         xRRigMovementForHelicopter = GameObject.FindGameObjectWithTag("XRrig").GetComponent<XRRigMovement>();
-        
     }
 
     // Update is called once per frame
@@ -34,9 +33,12 @@ public class HelicopterMovement : MonoBehaviour
     {
         helicopterTakeOff = xRRigMovementForHelicopter.isAllSaved;
         HelicopterFlyMovement();
-
     }
 
+    /// <summary>
+    /// When the Helicopter enters Helipad collider the clibing path gameobject become active and bool variable become true.
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "HeliPad")
@@ -44,9 +46,13 @@ public class HelicopterMovement : MonoBehaviour
             helicopterLanded = true;
             Debug.Log("Heli is good");
             stepToClimb.SetActive(true);
-        }
-        
+        } 
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Finish")
@@ -55,7 +61,15 @@ public class HelicopterMovement : MonoBehaviour
             StartCoroutine(WaitForLanding());
         }
     }
-    
+
+    #endregion
+
+    #region Private Methods
+
+    /// <summary>
+    /// Enumerator to check the helicopter position
+    /// </summary>
+    /// <returns></returns>
     IEnumerator WaitForLanding()
     {
         yield return new WaitForSeconds(3.5f);
@@ -63,6 +77,9 @@ public class HelicopterMovement : MonoBehaviour
         Debug.Log("Heli is good");
     }
 
+    /// <summary>
+    /// Methods to control the helicopter movement
+    /// </summary>
     void HelicopterFlyMovement()
     {
         //transform.LookAt(helipadArea.transform);
@@ -93,6 +110,9 @@ public class HelicopterMovement : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Method to take-off the helicopter.
+    /// </summary>
     void FinalTakeOff()
     {
         
@@ -107,4 +127,6 @@ public class HelicopterMovement : MonoBehaviour
 
         gameObject.transform.Translate(Vector3.forward * helicopterSpeed * Time.deltaTime);
     }
+
+    #endregion
 }

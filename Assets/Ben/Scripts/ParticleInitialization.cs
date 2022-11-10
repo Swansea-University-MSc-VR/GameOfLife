@@ -6,6 +6,7 @@ public class ParticleInitialization : MonoBehaviour
 {
     public ParticleSystem extinguisherParticlesSystem;
     public GameObject leftHand;
+    public AudioSource fireExtinguisherClip;
 
     #region Monobehaviour Methods
     void Start()
@@ -13,46 +14,32 @@ public class ParticleInitialization : MonoBehaviour
         leftHand = GameObject.FindGameObjectWithTag("LeftHand"); // Finding the LeftHand component
     }
 
-    private void OnCollisionStay(Collision collision)
+    /// <summary>
+    /// If gameobject with tag enters this objects collider area particle and sound will play.
+    /// </summary>
+    /// <param name="other"></param>
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "LeftHand")
+        if (other.gameObject.tag == "LeftHand")
         {
             extinguisherParticlesSystem.Play();
-            //Debug.Log(extinguisherParticlesSystem.isPlaying);
-        }
-        else
-        {
-            extinguisherParticlesSystem.Stop();
-            //Debug.Log(extinguisherParticlesSystem.isPlaying);
+            fireExtinguisherClip.Play();
         }
     }
 
-    ///// <summary>
-    ///// Collision detection of LeftHand for particle to play while entering and to stop while exiting
-    ///// </summary>
-    ///// <param name="collision"></param>
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.tag == "LeftHand")
-    //    {
-    //        extinguisherParticlesSystem.Play();
-    //        Debug.Log(extinguisherParticlesSystem.isPlaying);
-    //    }
-    //    else
-    //    {
-    //        extinguisherParticlesSystem.Stop();
-    //    }
+    /// <summary>
+    /// If gameobject with tag exits this objects collider area particle and sound will stop.
+    /// </summary>
+    /// <param name="other"></param>
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "LeftHand")
+        {
+            extinguisherParticlesSystem.Stop();
+            fireExtinguisherClip.Stop();
+        }
+        
+    }
 
-    //}
-
-    //private void OnCollisionExit(Collision collision)
-    //{
-    //    if (collision.gameObject.tag == "LeftHand")
-    //    {
-    //        extinguisherParticlesSystem.Stop();
-    //        Debug.Log(extinguisherParticlesSystem.isPlaying);
-    //    }
-
-    //}
     #endregion
 }

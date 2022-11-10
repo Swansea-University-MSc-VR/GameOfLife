@@ -29,6 +29,7 @@ public class ManikinController : MonoBehaviour
 
     public GameObject seatPosition;
     public bool enteredSafeArea;
+    public AudioSource walkingAudioClip;
 
     #region Monobehaviour Methods
     void Start()
@@ -121,15 +122,32 @@ public class ManikinController : MonoBehaviour
             Debug.Log(targetDistance);
             if (targetDistance >= allowedDistance)
             {
-                _speed = 0.01f;
+                _speed = 0.02f;
                 avatarAnimator.Play("Walking");
                 transform.position = Vector3.MoveTowards(transform.position, objectToFollow.transform.position, _speed);
+                //isWalkingTo = true;
+                //PlayWakingAudio();
             }
             else
             {
                 _speed = 0f;
                 avatarAnimator.Play("Idle");
+                //walkingAudioClip.Stop();
+                isWalkingTo = false;
             }
+        }
+    }
+
+    public bool isWalkingTo;
+    void PlayWakingAudio()
+    {
+        if (isWalkingTo)
+        {
+            walkingAudioClip.Play();
+        }
+        else
+        {
+            walkingAudioClip.Stop();
         }
     }
 

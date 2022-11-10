@@ -13,7 +13,10 @@ public class AircraftParticleInstantiation : MonoBehaviour
         aircraftParticleSystem.Stop();
     }
 
-
+    /// <summary>
+    /// While aircraft collide with different gameobjects with different tags
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "ForestAreaEntry")
@@ -40,13 +43,14 @@ public class AircraftParticleInstantiation : MonoBehaviour
 
     #region IEnumerators
     
-
+    // Particle start playing 
     IEnumerator StartParticleEffect()
     {
         yield return new WaitForSeconds(0.2f);
         aircraftParticleSystem.Play();
     }
-
+    
+    // Aircraft engine volume decrease
     IEnumerator DecreaseVolumeCoroutine()
     {
         while (flightEngineAudioSource.volume > 0f)
@@ -56,6 +60,7 @@ public class AircraftParticleInstantiation : MonoBehaviour
         }
     }
 
+    // Aircraft engine volume increases
     IEnumerator IncreaseVolumeCoroutine()
     {
         while (flightEngineAudioSource.volume < 1f)
@@ -64,5 +69,6 @@ public class AircraftParticleInstantiation : MonoBehaviour
             yield return null;
         }
     }
+
     #endregion
 }

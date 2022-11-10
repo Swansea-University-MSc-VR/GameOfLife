@@ -12,6 +12,7 @@ public class XRRigMovement : MonoBehaviour
     public bool isAllSaved;
 
     public GameObject playerHelicopterPosition;
+
     #region Monobehaviour Methods
     void Start()
     {
@@ -22,12 +23,16 @@ public class XRRigMovement : MonoBehaviour
         
     }
 
-  
     void Update()
     {
         CheckingMovementOfXRRig();
+        Debug.DrawRay(transform.position, transform.forward, Color.blue, 15f);
     }
 
+    /// <summary>
+    /// If the XR Rig enters HelicopterSaveArea then then the playerHelicopterPosition game object will be the parent
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "HelicopterSaveArea")
@@ -35,12 +40,13 @@ public class XRRigMovement : MonoBehaviour
             transform.parent = playerHelicopterPosition.transform;
         }
     }
+
     #endregion
 
     #region Private Methods
 
     /// <summary>
-    /// Method to check whether the XR_Rig (Player) is moving and updating a bool accordingliy
+    /// Method to check whether the XR_Rig (Player) is moving and updating a bool accordingliy.
     /// </summary>
     void CheckingMovementOfXRRig()
     {
@@ -48,6 +54,9 @@ public class XRRigMovement : MonoBehaviour
         UpdatingLastPosition();
     }
 
+    /// <summary>
+    /// Function to update the last position of the XR Rig.
+    /// </summary>
     void UpdatingLastPosition()
     {
         if (currentPosition == lastPosition)
@@ -78,17 +87,18 @@ public class XRRigMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Method for repositioning XR Rig position to playerHelicopterPosition
+    /// </summary>
     public void XRrigHelicopterPosition()
     {
-        {
-            gameObject.transform.position = new Vector3(playerHelicopterPosition.transform.position.x, playerHelicopterPosition.transform.position.y, playerHelicopterPosition.transform.position.z);
-            gameObject.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
-        }
+        //Spawning the XR Rig in the same position as the playerHelicopterPosition's position
+        gameObject.transform.position = new Vector3(playerHelicopterPosition.transform.position.x, playerHelicopterPosition.transform.position.y, playerHelicopterPosition.transform.position.z);
+        
+        //Spawning the XR Rig with a 90 degree rotation along 'y' axis
+        gameObject.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
     }
 
-    
-
     #endregion
-
 
 }

@@ -9,12 +9,17 @@ public class XRRigMovement : MonoBehaviour
 
     public bool isRigMoving;
 
+    public bool isAllSaved;
+
+    public GameObject playerHelicopterPosition;
     #region Monobehaviour Methods
     void Start()
     {
         isRigMoving = false;
-        currentPosition = gameObject.transform.position; // Collecting the current position
+        currentPosition = gameObject.transform.position; // Collecting the current position information
         lastPosition = transform.position;
+        playerHelicopterPosition = GameObject.FindGameObjectWithTag("PlayerPosition");
+        
     }
 
   
@@ -23,6 +28,13 @@ public class XRRigMovement : MonoBehaviour
         CheckingMovementOfXRRig();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "HelicopterSaveArea")
+        {
+            transform.parent = playerHelicopterPosition.transform;
+        }
+    }
     #endregion
 
     #region Private Methods
@@ -53,5 +65,30 @@ public class XRRigMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Function for checking all manikin entered helicopter
+    /// </summary>
+    public void IsAllManikinSaved()
+    {
+        isAllSaved = true;
+
+        if (isAllSaved)
+        {
+            XRrigHelicopterPosition();
+        }
+    }
+
+    public void XRrigHelicopterPosition()
+    {
+        {
+            gameObject.transform.position = new Vector3(playerHelicopterPosition.transform.position.x, playerHelicopterPosition.transform.position.y, playerHelicopterPosition.transform.position.z);
+            gameObject.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+        }
+    }
+
+    
+
     #endregion
+
+
 }

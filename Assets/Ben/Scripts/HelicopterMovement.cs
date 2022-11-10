@@ -8,22 +8,33 @@ public class HelicopterMovement : MonoBehaviour
     public GameObject helipadArea;
     public GameObject[] heliTargets;
 
+    public XRRigMovement xRRigMovementForHelicopter;
+
     [SerializeField]
     private bool reachedTopArea;
     [SerializeField]
     private bool helicopterLanded;
+    [SerializeField]
+    private bool helicopterTakeOff;
+
+    public GameObject stepToClimb;
+    
 
 
     // Start is called before the first frame update
     void Start()
     {
         reachedTopArea = false;
+        xRRigMovementForHelicopter = GameObject.FindGameObjectWithTag("XRrig").GetComponent<XRRigMovement>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        helicopterTakeOff = xRRigMovementForHelicopter.isAllSaved;
         HelicopterFlyMovement();
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -32,6 +43,7 @@ public class HelicopterMovement : MonoBehaviour
         {
             helicopterLanded = true;
             Debug.Log("Heli is good");
+            stepToClimb.SetActive(true);
         }
         
     }
@@ -54,7 +66,7 @@ public class HelicopterMovement : MonoBehaviour
     void HelicopterFlyMovement()
     {
         //transform.LookAt(helipadArea.transform);
-        if(transform.position != helipadArea.transform.position && !reachedTopArea && !helicopterLanded)
+        if(transform.position != helipadArea.transform.position && !reachedTopArea && !helicopterLanded && !helicopterTakeOff)
         {
             foreach (GameObject target in heliTargets)
             {
@@ -65,14 +77,34 @@ public class HelicopterMovement : MonoBehaviour
             //gameObject.transform.Translate(Vector3.forward * helicopterSpeed * Time.deltaTime);
         }
 
-        if (reachedTopArea && !helicopterLanded)
+        if (reachedTopArea && !helicopterLanded && !helicopterTakeOff)
         {
             gameObject.transform.Translate(Vector3.down * Time.deltaTime);
         }
-        else if(reachedTopArea && helicopterLanded)
+        else if(reachedTopArea && helicopterLanded && !helicopterTakeOff)
         {
             Debug.Log("Helicopter is safely landed");
         }
+        else if(reachedTopArea && helicopterLanded && helicopterTakeOff)
+        {
+            stepToClimb.SetActive(false);
+            Invoke("FinalTakeOff", 3f);
+        }
         
+    }
+
+    void FinalTakeOff()
+    {
+        
+        if (gameObject.transform.position.y < 11)
+        {
+            gameObject.transform.Translate(Vector3.up * Time.deltaTime);
+        }
+        if (gameObject.transform.position.x > -10)
+        {
+            gameObject.transform.Translate(Vector3.left * Time.deltaTime);
+        }
+
+        gameObject.transform.Translate(Vector3.forward * helicopterSpeed * Time.deltaTime);
     }
 }

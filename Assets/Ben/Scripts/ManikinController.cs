@@ -25,7 +25,7 @@ public class ManikinController : MonoBehaviour
     [SerializeField]
     private ManikinHealth _manikinHealth;
 
-    public LayerMask obstacleLayer;
+    //public LayerMask obstacleLayer;
 
     public GameObject seatPosition;
     public bool enteredSafeArea;
@@ -34,6 +34,7 @@ public class ManikinController : MonoBehaviour
     void Start()
     {
         objectToFollow = GameObject.FindGameObjectWithTag("XRrig").GetComponent<Transform>();
+        //objectToFollow = GameObject.FindGameObjectWithTag("GameController").GetComponent<Transform>();
         xRRigMovement = GameObject.FindGameObjectWithTag("XRrig").GetComponent<XRRigMovement>();
         avatarAnimator = gameObject.GetComponent<Animator>();
         isGathered = false;
@@ -52,7 +53,7 @@ public class ManikinController : MonoBehaviour
         }
         
         // Checking NPC's entering helicopter area
-        if(enteredSafeArea == true)
+        if(enteredSafeArea)
         {
             EnetredHelicopterArea();
         }   
@@ -107,16 +108,17 @@ public class ManikinController : MonoBehaviour
     void FollowThePlayer()
     {
         _distanceToXRrig = Vector3.Distance(objectToFollow.position, transform.position);
-
+        //Debug.Log(_distanceToXRrig);
         transform.LookAt(objectToFollow);
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out Shot, obstacleLayer) && isGathered == true && enteredSafeArea == false)
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out Shot) && isGathered == true && enteredSafeArea == false)
         {
             // Checking whether the raycast hit properly to thr target object, i.e Player.
             Debug.DrawRay(transform.position, transform.forward, Color.blue, 15f);
 
 
             targetDistance = Shot.distance;
+            Debug.Log(targetDistance);
             if (targetDistance >= allowedDistance)
             {
                 _speed = 0.01f;
@@ -156,6 +158,8 @@ public class ManikinController : MonoBehaviour
             avatarAnimator.Play("StandToSit");
             transform.parent = seatPosition.transform;
         }
+
+
     }
 
     #endregion

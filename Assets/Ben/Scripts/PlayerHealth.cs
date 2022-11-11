@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public Slider healthSliderBar;
+    public Slider healthSliderBar; // slider gameobject for player health
 
     private float _totalHealth;
     private float _totalHealthLeft;
@@ -28,13 +28,14 @@ public class PlayerHealth : MonoBehaviour
         {
             
             healthSliderBar.value = _totalHealthLeft - 1f * Time.deltaTime;
-            Debug.Log("Health is reducing");
+            
         }
 
     }
 
     void Update()
     {
+        // total health left for player
         _totalHealthLeft = healthSliderBar.value;
     }
     #endregion

@@ -5,7 +5,7 @@ using UnityEngine.VFX;
 
 public class ParticleCollisionDetection : MonoBehaviour
 {
-    //public GameObject[] fireGO;
+    
 
     /// <summary>
     /// Attach this script to the componrent that need to be disabled while particle hits
@@ -18,12 +18,12 @@ public class ParticleCollisionDetection : MonoBehaviour
         if(other.tag == "Extinguisher")
         {
             StartCoroutine(Extinguish());
-            Debug.Log("If " + other.tag + " GO False");
+            
         }
         else if (other.tag == "AerialFirefighter")
         {
             StartCoroutine(AerialExtinguish());
-            Debug.Log("If " + other.tag + " GO False");
+            
         }
     }
 
@@ -47,22 +47,5 @@ public class ParticleCollisionDetection : MonoBehaviour
     }
 
 
-
-
-
-
-
-
-    //void findingFireGameObject()
-    //{
-
-    //    //get all the objects with the tag "myTag"
-    //    fireGO = GameObject.FindGameObjectsWithTag("Fire");
-    //    //loop through the returned array of game objects and set each to active false
-    //    foreach (GameObject item in fireGO)
-    //    {
-    //        //item.SetActive(false);
-    //    } 
-    //}
 
 }

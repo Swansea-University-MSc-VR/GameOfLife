@@ -4,32 +4,31 @@ using UnityEngine;
 
 public class ManikinController : MonoBehaviour
 {
-    public Transform objectToFollow;
-    public Vector3 offset;
+    public Transform objectToFollow; // object to follow by manikin
 
-    public XRRigMovement xRRigMovement;
+    public XRRigMovement xRRigMovement; // XR rigmovement script
 
-    public bool isGathered;
+    public bool isGathered; // bool to check whether manikin found XR Rig
 
     [SerializeField]
-    private float _speed;
-    public float targetDistance;
-    public float allowedDistance;
-    private float _distanceToXRrig;
+    private float _speed; // speed of walk
+    public float targetDistance; // distance between XR Rig and manikin
+    public float allowedDistance; // distance allowed between Manikin and XR Rig
+    private float _distanceToXRrig; // current distance between XRRig and player
 
     public RaycastHit Shot;
 
     [SerializeField]
-    private Animator avatarAnimator;
+    private Animator avatarAnimator; // manikin animator
 
     [SerializeField]
-    private ManikinHealth _manikinHealth;
+    private ManikinHealth _manikinHealth; // manikin health script
 
     //public LayerMask obstacleLayer;
 
-    public GameObject seatPosition;
-    public bool enteredSafeArea;
-    public AudioSource walkingAudioClip;
+    public GameObject seatPosition; // position for manikin to sit
+    public bool enteredSafeArea; // bool for entering helicopter area
+    
 
     #region Monobehaviour Methods
     void Start()
@@ -125,31 +124,18 @@ public class ManikinController : MonoBehaviour
                 _speed = 0.02f;
                 avatarAnimator.Play("Walking");
                 transform.position = Vector3.MoveTowards(transform.position, objectToFollow.transform.position, _speed);
-                //isWalkingTo = true;
-                //PlayWakingAudio();
+                
             }
             else
             {
                 _speed = 0f;
-                avatarAnimator.Play("Idle");
-                //walkingAudioClip.Stop();
-                isWalkingTo = false;
+                avatarAnimator.Play("Idle");   
+                
             }
         }
     }
 
-    public bool isWalkingTo;
-    void PlayWakingAudio()
-    {
-        if (isWalkingTo)
-        {
-            walkingAudioClip.Play();
-        }
-        else
-        {
-            walkingAudioClip.Stop();
-        }
-    }
+
 
     /// <summary>
     /// While entering the helicopter area the manikins will walk towards the their seat 

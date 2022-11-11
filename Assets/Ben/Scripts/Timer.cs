@@ -7,7 +7,7 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
     public Slider timeLeftSlider;   //Slider for remaining time
-    public TextMeshProUGUI timeLeftDigital;
+    public TextMeshProUGUI timeLeftDigital; // textmeshpro to show the time left
     public float timeLeft;
 
     [SerializeField]
@@ -25,7 +25,7 @@ public class Timer : MonoBehaviour
         }
         else
         {
-            return;
+            timeLeftDigital.text = "LEAVE"; // display text on textmeshpro
         }
     }
     #endregion

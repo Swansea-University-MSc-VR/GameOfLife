@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class XRRigMovement : MonoBehaviour
 {
-    public Vector3 currentPosition;
-    public Vector3 lastPosition;
+    public Vector3 currentPosition; //current position
+    public Vector3 lastPosition; // stores last position
 
-    public bool isRigMoving;
+    public bool isRigMoving; // check whether player is moving
 
-    public bool isAllSaved;
+    public bool isAllSaved; // bool for finalizing all saved and true on click on button in watch
 
     public GameObject playerHelicopterPosition;
 
@@ -26,7 +26,7 @@ public class XRRigMovement : MonoBehaviour
     void Update()
     {
         CheckingMovementOfXRRig();
-        Debug.DrawRay(transform.position, transform.forward, Color.blue, 15f);
+        
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ public class XRRigMovement : MonoBehaviour
         {
             isRigMoving = false;
             //lastPosition = currentPosition;
-            Debug.Log("Rig moving: " + isRigMoving);
+            
 
         }
         else if (currentPosition != lastPosition)

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class HelicopterMovement : MonoBehaviour
 {
-    public float helicopterSpeed;
-    public GameObject helipadArea;
+    public float helicopterSpeed; // helicopter movement speed
+    public GameObject helipadArea; // helipad area
     public GameObject[] heliTargets;
 
-    public XRRigMovement xRRigMovementForHelicopter;
+    public XRRigMovement xRRigMovementForHelicopter; // XR Rigmovement script
 
     [SerializeField]
     private bool reachedTopArea;
@@ -17,7 +17,7 @@ public class HelicopterMovement : MonoBehaviour
     [SerializeField]
     private bool helicopterTakeOff;
 
-    public GameObject stepToClimb;
+    public GameObject stepToClimb; // game object attached to helicopter as steps
 
 
     #region Monobehaviour Methods

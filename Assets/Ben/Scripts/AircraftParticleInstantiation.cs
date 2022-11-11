@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class AircraftParticleInstantiation : MonoBehaviour
 {
-    public ParticleSystem aircraftParticleSystem;
-    public AudioSource flightEngineAudioSource;
+    public ParticleSystem aircraftParticleSystem; // particle system attached to aircraft
+    public AudioSource flightEngineAudioSource; // audio source attached to aircraft
 
     #region Monobehaviour Methods
     void Start()
     {
+        //stoping particle system initially incase it is playing
         aircraftParticleSystem.Stop();
     }
 

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ParticleInitialization : MonoBehaviour
 {
-    public ParticleSystem extinguisherParticlesSystem;
-    public GameObject leftHand;
-    public AudioSource fireExtinguisherClip;
+    public ParticleSystem extinguisherParticlesSystem; // particle system attached to extinguisher
+    public GameObject leftHand; // left hand gameobject of XR Rig
+    public AudioSource fireExtinguisherClip; // audio source of fire extinguisher 
 
     #region Monobehaviour Methods
     void Start()

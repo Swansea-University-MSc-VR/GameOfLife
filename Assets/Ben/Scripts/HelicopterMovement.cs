@@ -6,7 +6,7 @@ public class HelicopterMovement : MonoBehaviour
 {
     public float helicopterSpeed; // helicopter movement speed
     public GameObject helipadArea; // helipad area
-    public GameObject[] heliTargets;
+    public GameObject[] heliTargets; // helicopter target points
 
     public XRRigMovement xRRigMovementForHelicopter; // XR Rigmovement script
 
@@ -31,7 +31,10 @@ public class HelicopterMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // checking the bool for helicopter, whether it is ready for takeoff or not
         helicopterTakeOff = xRRigMovementForHelicopter.isAllSaved;
+
+        // start helicopter movement
         HelicopterFlyMovement();
     }
 
@@ -87,15 +90,17 @@ public class HelicopterMovement : MonoBehaviour
         {
             foreach (GameObject target in heliTargets)
             {
+                // looking at target, helipadarea
                 transform.LookAt(target.transform);
+                // moving helicopter towards target
                 gameObject.transform.Translate(Vector3.forward * helicopterSpeed * Time.deltaTime);
                 
-            }
-            //gameObject.transform.Translate(Vector3.forward * helicopterSpeed * Time.deltaTime);
+            }         
         }
 
         if (reachedTopArea && !helicopterLanded && !helicopterTakeOff)
         {
+            // helicopter moving down y-axis
             gameObject.transform.Translate(Vector3.down * Time.deltaTime);
         }
         else if(reachedTopArea && helicopterLanded && !helicopterTakeOff)
@@ -104,7 +109,9 @@ public class HelicopterMovement : MonoBehaviour
         }
         else if(reachedTopArea && helicopterLanded && helicopterTakeOff)
         {
+            // activate a gameobject
             stepToClimb.SetActive(false);
+            // start FinalTakeOff method after a delay
             Invoke("FinalTakeOff", 3f);
         }
         
@@ -118,13 +125,16 @@ public class HelicopterMovement : MonoBehaviour
         
         if (gameObject.transform.position.y < 11)
         {
+            // moving gameobject up, along y-axis
             gameObject.transform.Translate(Vector3.up * Time.deltaTime);
         }
         if (gameObject.transform.position.x > -10)
         {
+            //moving gameobject towards left, x-axis
             gameObject.transform.Translate(Vector3.left * Time.deltaTime);
         }
 
+        // moving gameobject forward along x-axis
         gameObject.transform.Translate(Vector3.forward * helicopterSpeed * Time.deltaTime);
     }
 

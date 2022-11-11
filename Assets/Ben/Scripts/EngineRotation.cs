@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EngineRotation : MonoBehaviour
 {
-    public int speed;
+    public int speed; // speed of gameobject attached with this gameobject
 
    
     void Update()

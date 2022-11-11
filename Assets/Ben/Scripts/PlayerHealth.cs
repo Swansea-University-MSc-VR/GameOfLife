@@ -7,13 +7,13 @@ public class PlayerHealth : MonoBehaviour
 {
     public Slider healthSliderBar; // slider gameobject for player health
 
-    private float _totalHealth;
-    private float _totalHealthLeft;
+    private float _totalHealth; // total health variable
+    private float _totalHealthLeft; // variable for total health left
 
     #region Monobehaviour
     void Start()
     {
-        _totalHealth = 100f;
+        _totalHealth = 100f; // total health of player
         _totalHealthLeft = _totalHealth;
     }
 
@@ -26,13 +26,14 @@ public class PlayerHealth : MonoBehaviour
 
         if (fire.gameObject.tag == "Fire")
         {
-            
+            // health slider value reduces as player collide with gameobject with tag 'Fire'
             healthSliderBar.value = _totalHealthLeft - 1f * Time.deltaTime;
             
         }
 
     }
 
+    //update every frames per second
     void Update()
     {
         // total health left for player

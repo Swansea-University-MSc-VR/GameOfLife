@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class ManikinHealth : MonoBehaviour
 {
-    public Slider manikinhealthSliderBar;
-    public float manikinTotalHealthLeft;
+    public Slider manikinhealthSliderBar; // manikin slider gameobject variable
+    public float manikinTotalHealthLeft; // manikin total health left variable
 
-    private float _manikinTotalHealth;
+    private float _manikinTotalHealth; // manikin total health variable
 
     #region Monobehaviour Methods
     void Start()
@@ -25,13 +25,15 @@ public class ManikinHealth : MonoBehaviour
     {
         if (fire.gameObject.tag == "Fire")
         {
+            // slider value changes with manikin health left
             manikinhealthSliderBar.value = manikinTotalHealthLeft - 1f * Time.deltaTime;
-            Debug.Log("Health is reducing");
+            
         }
     }
 
     void Update()
     {
+        // updating total health left
         manikinTotalHealthLeft = manikinhealthSliderBar.value;
         
     }

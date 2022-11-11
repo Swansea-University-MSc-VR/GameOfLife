@@ -22,20 +22,25 @@ public class AircraftParticleInstantiation : MonoBehaviour
     {
         if (collision.gameObject.tag == "ForestAreaEntry")
         {
-            
-            //aircraftParticleSystem.Play();
+            // start the particle playing
             StartCoroutine(StartParticleEffect());
+
+            // start increasing the volume of audio source playing the aricraft engine audio clip
             StartCoroutine(IncreaseVolumeCoroutine());
         }
 
         else if (collision.gameObject.tag == "ForestAreaExit")
         {
+            // stop particle system
             aircraftParticleSystem.Stop();
+
+            // start decreasing the volume of audio source playing the aricraft engine audio clip
             StartCoroutine(DecreaseVolumeCoroutine());
 
         }
         else if (collision.gameObject.tag == "FlightDestroyer")
         {
+            // Destroying the game object after a small delay once it collide with gameobject with tag FlightDestroyer
             Destroy(gameObject, 0.1f);
         }
     }

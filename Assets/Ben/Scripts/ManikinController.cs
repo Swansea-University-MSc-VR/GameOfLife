@@ -34,7 +34,7 @@ public class ManikinController : MonoBehaviour
     void Start()
     {
         objectToFollow = GameObject.FindGameObjectWithTag("XRrig").GetComponent<Transform>();
-        //objectToFollow = GameObject.FindGameObjectWithTag("GameController").GetComponent<Transform>();
+        
         xRRigMovement = GameObject.FindGameObjectWithTag("XRrig").GetComponent<XRRigMovement>();
         avatarAnimator = gameObject.GetComponent<Animator>();
         isGathered = false;
@@ -42,11 +42,13 @@ public class ManikinController : MonoBehaviour
 
     void Update()
     {
+        // method to check whether the manikin is found by player
         CheckingGatheredOrNot();
 
         // Checking whether the player gathered all the NPC and they have not entered the helicopter area
         if(isGathered == true && !enteredSafeArea)
         {
+            // method for following the XR Rig(player) 
             FollowThePlayer();
 
             ManikinDeathAnimationTransition();
@@ -96,8 +98,9 @@ public class ManikinController : MonoBehaviour
     {
         if (_manikinHealth.manikinTotalHealthLeft == 0f)
         {
+            // playing animation DeathRight
             avatarAnimator.Play("DeathRight");
-            Debug.Log(_manikinHealth.manikinTotalHealthLeft);
+            
         }
     }
 
@@ -108,7 +111,8 @@ public class ManikinController : MonoBehaviour
     void FollowThePlayer()
     {
         _distanceToXRrig = Vector3.Distance(objectToFollow.position, transform.position);
-        //Debug.Log(_distanceToXRrig);
+        
+        // looking at XR Rig (player)
         transform.LookAt(objectToFollow);
 
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out Shot) && isGathered == true && enteredSafeArea == false)
@@ -116,20 +120,22 @@ public class ManikinController : MonoBehaviour
             // Checking whether the raycast hit properly to thr target object, i.e Player.
             Debug.DrawRay(transform.position, transform.forward, Color.blue, 15f);
 
-
+            // target distance is equal to the ray hit distance
             targetDistance = Shot.distance;
-            Debug.Log(targetDistance);
+            
             if (targetDistance >= allowedDistance)
             {
+                //speed of walk
                 _speed = 0.02f;
-                avatarAnimator.Play("Walking");
+                avatarAnimator.Play("Walking");  // playing animation Walking
+                // moving manikin towards player
                 transform.position = Vector3.MoveTowards(transform.position, objectToFollow.transform.position, _speed);
                 
             }
             else
             {
                 _speed = 0f;
-                avatarAnimator.Play("Idle");   
+                avatarAnimator.Play("Idle");   // playing idle animation
                 
             }
         }
@@ -151,15 +157,18 @@ public class ManikinController : MonoBehaviour
 
             isGathered = false;
             transform.LookAt(seatPosition.transform);
+            // entering helicopter 
             transform.position = Vector3.MoveTowards(transform.position, seatPosition.transform.position, _speed);
-            avatarAnimator.Play("Walking");
+            avatarAnimator.Play("Walking"); // playing walking animation
 
         }
 
         if (transform.position == seatPosition.transform.position)
         {
+            // rotating manikin at seat position
             transform.rotation = Quaternion.Euler(0f, 5f, 0f);
-            avatarAnimator.Play("StandToSit");
+            avatarAnimator.Play("StandToSit"); // playing sit animation
+            //making manikin as a child of seatposition
             transform.parent = seatPosition.transform;
         }
 

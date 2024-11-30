@@ -19,7 +19,7 @@ public class ForestFire3D : MonoBehaviour
     public GameObject cellPrefab; // gameobject prefab used to represent a cell on the grid   
 
     public ForestFireCell[,] forestFireCells = new ForestFireCell[0, 0]; // array of ForestFireCell objects
-    public ForestFireCell.State[,] forestFireCellsNextGenStates = new ForestFireCell.State[0,0]; // array of cell states to be used in the next generation of the game 
+    public ForestFireCell.State[,] forestFireCellsNextGenStates = new ForestFireCell.State[0, 0]; // array of cell states to be used in the next generation of the game 
 
     public GameObject[,] cellGameObjects = new GameObject[0, 0]; // an array to hold references to each gameobject that make up grid
     public bool gameRunning = false; // bool controlling whether the game is currently running
@@ -52,11 +52,11 @@ public class ForestFire3D : MonoBehaviour
         // if setGamePause is true the game should stop running
         if (setGamePause)
         {
-            gameRunning = false;           
+            gameRunning = false;
         }
         else // else if setGamePause is false unpause the game
         {
-            gameRunning = true;          
+            gameRunning = true;
         }
     }
 
@@ -69,7 +69,7 @@ public class ForestFire3D : MonoBehaviour
             // if the gameRunning is true, pause the game
             if (gameRunning)
             {
-                PauseGame(true);            
+                PauseGame(true);
             }
             else // if the gameRunning is false, unpause the game
             {
@@ -104,7 +104,7 @@ public class ForestFire3D : MonoBehaviour
     private void RandomiseGrid()
     {
         nlight = 2; // how many trees to set on fire
-                      // iterate through every cell in the cell in the grid and set its state to dead, decide what type of object is present and if flammable assign an amount of fuel
+                    // iterate through every cell in the cell in the grid and set its state to dead, decide what type of object is present and if flammable assign an amount of fuel
 
         for (int xCount = 0; xCount < gridSizeX; xCount++)
         {
@@ -113,7 +113,7 @@ public class ForestFire3D : MonoBehaviour
                 xC = UnityEngine.Random.Range(0, 100); // generate a random number between 0 and 100
 
                 if (xC < rockChance) // if the random value is less than rock chance, assign cell as rock
-                {                   
+                {
                     forestFireCells[xCount, yCount].SetRock();
                 }
                 else if (xC < grassChance) // if the random value is less than grass chance, assign cell as grass and set cell fuel
@@ -143,7 +143,7 @@ public class ForestFire3D : MonoBehaviour
         } while (nlight > 0);  // when you've lit them all exit this loop
 
         // set the middle cell as grass which is where the player is placed
-        forestFireCells[20, 20].SetGrass();
+       // forestFireCells[20, 20].SetGrass();
     }
 
 
@@ -160,7 +160,7 @@ public class ForestFire3D : MonoBehaviour
 
                 if (forestFireCells[xCount, yCount].cellState == ForestFireCell.State.Alight) // if the cell is currently alight let it burn but reduce it's fuel and see if it goes out
                 {
-                     forestFireCells[xCount, yCount].cellFuel--; // reduce fuel by 1 (-- operator reduces an integer by 1)
+                    forestFireCells[xCount, yCount].cellFuel--; // reduce fuel by 1 (-- operator reduces an integer by 1)
 
 
                     if (forestFireCells[xCount, yCount].cellFuel <= 0) // has it burned all its fuel?
@@ -181,7 +181,7 @@ public class ForestFire3D : MonoBehaviour
                         xC = UnityEngine.Random.Range(0, 100); // generate a random number between 0 and 100
 
                         if (xC < 10 * alightNeighbourCells) // the more alight neighbours the greater the probability of catching light
-                                                                      // e.g. 1 alight neighbour = 10 * 1 = 10% chance of catching fire, 2 alight neighbours = 10 * 2 = 20% chance of catching fire, etc.
+                                                            // e.g. 1 alight neighbour = 10 * 1 = 10% chance of catching fire, 2 alight neighbours = 10 * 2 = 20% chance of catching fire, etc.
                         {
                             forestFireCellsNextGenStates[xCount, yCount] = ForestFireCell.State.Alight;  // a 10% chance of catching fire
                         }
@@ -292,9 +292,9 @@ public class ForestFire3D : MonoBehaviour
                 // add to array
                 ForestFireCell forestFireCell = newCell.GetComponent<ForestFireCell>();
                 forestFireCells[xCount, yCount] = forestFireCell;
-                
-                 // add reference to camera
-                forestFireCell.playerCamera = gameCamera.gameObject;                
+
+                // add reference to camera
+                forestFireCell.playerCamera = gameCamera.gameObject;
 
                 ySpacing += 3;
             }

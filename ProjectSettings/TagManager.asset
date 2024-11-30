@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ignite
+  - Zombie
+  - Human
+  - Serum
   layers:
   - Default
   - TransparentFX
